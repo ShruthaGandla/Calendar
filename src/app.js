@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import './css/style.css'
 
 class App extends React.Component{
   render(){
@@ -10,5 +11,3 @@ class App extends React.Component{
 }
 
 ReactDOM.render(<App />, document.getElementById('root'));
-
-// console.log('hello')
