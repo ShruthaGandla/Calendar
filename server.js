@@ -1,6 +1,9 @@
 const express = require('express');
 const app = express();
-const PORT = 5000;
+const bodyParser = require('body-parser');
+const PORT = 8080;
+
+app.use(bodyParser.json());
 
 // Sample data
 const physicians = [
@@ -33,6 +36,7 @@ app.get('*.js', (req, res, next) => {
   next();
 });
 
+
 app.get('/api/physicians', (req, res) => {
     res.json({physicians, prefix});
 })
@@ -41,6 +45,21 @@ app.get('/api/physicians/:id', (req, res) => {
     let result = physiciansAppointments.filter((item) => item.id == req.params.id);
     res.json(result);
 })
+
+app.put('/api/physicians/appointments/:id', (req,res) => {
+    const id = Number(req.params.id);
+    const physician =  physiciansAppointments.filter((item) => item.id == req.params.id);
+    console.log(physician)
+    physician[0].list.push({
+        patientId: ((physician[0].list).length)+1,
+        patientName: req.body.name,
+        time:req.body.time,
+        kind:req.body.kind
+    })
+    console.log(physiciansAppointments[0].list)
+    res.json({message: req.body})
+
+});
 
 app.use(express.static('dist'));
 

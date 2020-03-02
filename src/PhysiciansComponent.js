@@ -13,7 +13,6 @@ class PhysiciansComponent extends React.Component {
         };
         this.pysiciansTable =[];
         this.physicianAppointments =[];
-        this.id = 0;
     }
 
     componentDidMount() {
@@ -23,21 +22,18 @@ class PhysiciansComponent extends React.Component {
     }
 
     loadTable(physicianDetails,event){
-        console.log('physician id', physicianDetails)
-        // if(this.id != physicianDetails.id){
+        // the default behaviour of the a tag will chnage the browser url to /firstName.Hence preventDefault
+        event.preventDefault();
          this.physicianAppointments = <AppointmentsTable id={physicianDetails.id} firstName={physicianDetails.firstName} lastName={physicianDetails.lastName} prefix={this.state.prefix}/>
-        //  console.log('abcdef', this.physicianAppointments );
-         this.setState({showAppointments: true})
-
-        // }
+        //calls the render func to render the list of appointments.We could also use array in place of boolean 
+         this.setState({showAppointments: true})        
         
-        
-    }    
+    } 
 
     render() {
         if(this.state.physicians.length>0){
             this.pysiciansTable = this.state.physicians.map((item) => {
-                return <li key={item.id}><a key={item.id} onClick={this.loadTable.bind(this,{id: item.id,firstName: item.firstName,lastName: item.lastName})}>{ item.lastName+','+item.firstName }</a></li>
+                return <li key={item.id}><a key={item.id} href={item.firstName} onClick={this.loadTable.bind(this,{id: item.id,firstName: item.firstName,lastName: item.lastName})}>{ item.lastName+','+item.firstName }</a></li>
             })
         }
         return (
